@@ -13,10 +13,14 @@ SOURCES += main.cpp \
     macdalgo.cpp \
     algo.cpp \
     Bot.cpp \
-    Simplebot.cpp
+    Simplebot.cpp \
+    bollingers.cpp \
+    assetprices.cpp
 
 HEADERS += \
     algo.h \
     macdalgo.h \
     Bot.h \
-    Simplebot.h
+    Simplebot.h \
+    bollingers.h \
+    assetprices.h
