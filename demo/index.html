@@ -59,8 +59,8 @@
             let charts = data.map(function(x) {
                 return {
                     label: x.name,
-                    tab: x.feed,//.map(x => x * 10),
-                    color: generateRandomColor()
+                    tab: x.feed.map(x => x * 10),
+                    color: x.name === "Bot Wisdom" ? "red" : generateRandomColor()
              }});
 
             Vue.use(VueCharts);
