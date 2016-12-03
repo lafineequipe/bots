@@ -10,6 +10,5 @@ MacdAlgo::~MacdAlgo()
 
 bool MacdAlgo::shouldBuy(const Prices &prices)
 {
-    (void)prices;
-    return false;
+    return macd(prices, 12, 26) > mme(prices, 9) * 1.1;
 }

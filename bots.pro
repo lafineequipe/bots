@@ -10,7 +10,8 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    macdalgo.cpp
+    macdalgo.cpp \
+    algo.cpp
 
 HEADERS += \
     algo.h \
