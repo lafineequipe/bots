@@ -6,9 +6,9 @@ static const int shortDurationRange = 25;
 static const int longDurationMin = 5;
 static const int longDurationRange = 60;
 static const int signalMmeDurationMin = 2;
-static const int signalMmeDurationRange = 50;
-static const int minimumDurationMin = 50;
-static const int minimumDurationRange = 50;
+static const int signalMmeDurationRange = 20;
+static const int minimumDurationMin = 3;
+static const int minimumDurationRange = 20;
 
 MacdAlgo::MacdAlgo(bool random,
                    int shortDuration,

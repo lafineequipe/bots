@@ -8,9 +8,8 @@
 class SimpleBot : public Bot
 {
 public:
-    SimpleBot(const Prices& history, bool random = false);
+    SimpleBot(Method method, const Prices& history, bool random = false);
 
-    virtual Result getBest();
     virtual Action getNextAction(const Prices& history, Method method);
 
 private:

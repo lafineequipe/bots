@@ -1,54 +1,55 @@
 #include <QDebug>
 #include "Bot.h"
 
-Bot::Bot(const Prices &history)
-    : _history(history)
+Bot::Bot(Method method, const Prices &history)
+    : _method(method), _history(history)
 {
-    for (int i = MACD; i < MaxMethods; i = i + 1)
-    {
-        Result &d = _scores[static_cast<Method>(i)];
-        d.type = static_cast<Method>(i);
-        d.mistakes = 0;
-        d.purchases = 0;
-        d.sells = 0;
-    }
+    _score.type = method;
+    _score.mistakes = 0;
+    _score.purchases = 0;
+    _score.sells = 0;
 }
 
 Bot::~Bot()
 {
 }
 
-void Bot::processPrice(double todayPrice)
+QJsonObject Bot::toJson() const
 {
-    for (int i = MACD; i < MaxMethods; ++i)
-    {
-        Method method = static_cast<Method>(i);
-        Action result = getNextAction(_history, method);
-        bool buy = result == Buy;
-        bool sell = !buy && result == Sell;
+    static int macdCount = 0;
+    static int bollingerCount = 0;
 
-        if (buy || sell)
-        {
-            bool shouldBuy = _history.last() < todayPrice;
-            if ((buy && shouldBuy) || (sell && !shouldBuy))
-            {
-                if (buy)
-                    _scores[method].purchases += 1;
-                else
-                    _scores[method].sells += 1;
-            }
-            else
-            {
-                //qDebug() << "Mistake" << _history.last() << buy;
-                _scores[method].mistakes += 1;
-            }
-        }
-    }
+    QJsonObject obj;
 
-    _history.append(todayPrice);
+    if (_method == MACD)
+        obj.insert("name", QString("Bot MACD %1").arg(++macdCount));
+    else
+        obj.insert("name", QString("Bot Bollinger %1").arg(++bollingerCount));
+
+    obj.insert("feed", _feed);
+    return obj;
 }
 
-const QMap<Method, Result> &Bot::getScores() const
+void Bot::processPrice(double todayPrice)
 {
-    return _scores;
+    Action result = getNextAction(_history, _method);
+    bool buy = result == Buy;
+    bool sell = !buy && result == Sell;
+
+    if (buy || sell)
+    {
+        bool shouldBuy = _history.last() < todayPrice;
+        if ((buy && shouldBuy) || (sell && !shouldBuy))
+        {
+            if (buy)
+                _score.purchases += 1;
+            else
+                _score.sells += 1;
+        }
+        else
+            _score.mistakes += 1;
+    }
+
+    _feed.append(_score.purchases + _score.sells - _score.mistakes);
+    _history.append(todayPrice);
 }
