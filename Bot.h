@@ -1,23 +1,32 @@
 #ifndef BOT_H
 #define BOT_H
 
-#include <vector>
-#include <map>
+#include <QMap>
 #include "algo.h"
 
-using namespace std;
-
-enum method{MACD, Bollinger, Trends};
+enum Method
+{
+    MACD,
+    Bollinger,
+    Trends,
+    MaxMethods
+};
 
 class Bot
 {
-    map<method, int> scores;
-    virtual void computeScores(vector<double>& prices);
-
 public:
-    Bot(vector<method> methods);
-    virtual method getBest();
-    virtual void updateBase(const Prices& prices, double yesterdayPrice, double todayPrice);
+    Bot(const Prices& history);
+    virtual ~Bot();
+
+    void processPrice(double todayPrice);
+
+    virtual Method getBest() = 0;
+    virtual bool shouldBuy(const Prices& history, Method method) = 0;
+    virtual bool shouldSell(const Prices& history, Method method) = 0;
+
+protected:
+    Prices _history;
+    QMap<Method, int> _scores;
 };
 
 #endif // BOT_H

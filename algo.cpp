@@ -18,13 +18,13 @@ double Algo::mma(const Prices &prices, int duration)
 
 double Algo::mme(const Prices &prices, int duration)
 {
-    int last = prices.size() - 1;
-    double value = prices[last];
+    int first = prices.size() - duration - 1;
+    double value = prices[first];
     double lastValue = value;
 
     for (int i = 1; i < duration; ++i)
     {
-        value = lastValue + (2 / (duration + 1)) * (prices[last - i] - lastValue);
+        value = lastValue + (2 / (duration + 1)) * (prices[first + i] - lastValue);
         lastValue = value;
     }
 
