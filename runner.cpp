@@ -2,7 +2,7 @@
 #include "runner.h"
 #include "Simplebot.h"
 
-static const int Iterations = 50;
+static const int Iterations = 100;
 
 Runner::Runner(QObject *parent)
     : QObject(parent), _feeder("AAPL", 400)
