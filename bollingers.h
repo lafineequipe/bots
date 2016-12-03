@@ -13,9 +13,11 @@ class Bollingers : Algo
 
 public:
     Bollingers(const AssetPrices&, double factor);
-    void computeBands();
+    void computeBands(int period);
 
-    virtual Action getNextAction(const Prices &prices);
+    virtual Action getNextAction(const Prices &prices, int period);
+
+    void updateAssetPrices(const Prices& prices);
 };
 
 #endif // BOLLINGERS_H

@@ -4,33 +4,36 @@
 
 using namespace std;
 
-AssetPrices::AssetPrices(const Prices& _historicalPrices)
-    : historicalPrices(_historicalPrices),
-      averages(_historicalPrices.size()),
-      stdDeviations(_historicalPrices.size())
+AssetPrices::AssetPrices(const Prices& _historicalPrices): historicalPrices(_historicalPrices)
 {
 }
 
-void AssetPrices::ComputeAveragesAndStdDeviations()
+void AssetPrices::ComputeAveragesAndStdDeviations(int period)
 {
     int n = historicalPrices.size();
+    averages.resize(n);
+    stdDeviations.resize(n);
     double sum;
     double sq_sum(n);
 
-    //compute averages
-    averages[0] = historicalPrices[0];
-    stdDeviations[0] = 0.0;
-    for(int i = 1; i<n; i++)
+    //compute for time t<period
+    for(int i = 1; i<period; i++)
     {
-        sum = std::accumulate(historicalPrices.begin(), historicalPrices.begin()+i, 0.0);
-        averages[i] = sum/(i+1);
+        averages[i] = 0.0;
+        stdDeviations[i] = 0.0;
+    }
 
-        for(int j=0; j<i; j++)
+    // compute at time >= period
+    for(int i = 1; i<n-1-period; i++)
+    {
+        sum = std::accumulate(historicalPrices.begin()+ i, historicalPrices.begin()+i+period-1, 0.0);
+        averages[i+period-1] = sum/period;
+
+        for(int j=i; j<i+period; j++)
         {
-            sq_sum = (historicalPrices[j]-averages[j])*(historicalPrices[j]-averages[j]);
+            sq_sum = (historicalPrices[j]-averages[i+period-1])*(historicalPrices[j]-averages[i+period-1]);
+            stdDeviations[i+period-1] = sq_sum/period;
         }
-
-        stdDeviations[i] = sq_sum/(i+1);
     }
 }
 

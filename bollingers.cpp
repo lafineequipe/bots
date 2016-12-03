@@ -5,16 +5,16 @@ Bollingers::Bollingers(const AssetPrices& _assetPrices, double factor)
     : assetPrices(_assetPrices),
       decisionFactor(factor)
 {
-    int n;
-    n = assetPrices.historicalPrices.size();
-    upperBand.resize(n);
-    lowerBand.resize(n);
-    computeBands();
 }
 
-void Bollingers::computeBands()
+void Bollingers::updateAssetPrices(const Prices& prices)
 {
-    assetPrices.ComputeAveragesAndStdDeviations();
+    assetPrices = AssetPrices(prices);
+}
+
+void Bollingers::computeBands(int period)
+{
+    assetPrices.ComputeAveragesAndStdDeviations(period);
     int n = assetPrices.historicalPrices.size();
     for(int i=0; i<n; i++)
     {
@@ -24,9 +24,15 @@ void Bollingers::computeBands()
     }
 }
 
-Action Bollingers::getNextAction(const Prices &prices)
+Action Bollingers::getNextAction(const Prices &prices, int period)
 {
-    int n = assetPrices.historicalPrices.size();
+    int n;
+    n = prices.size();
+
+    upperBand.resize(n);
+    lowerBand.resize(n);
+    computeBands(period);
+    n = assetPrices.historicalPrices.size();
 
     if (assetPrices.averages[n-1]>decisionFactor*upperBand[n-1])
         return Buy;

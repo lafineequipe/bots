@@ -6,15 +6,15 @@
 
 class AssetPrices
 {
-    Prices historicalPrices;
     Prices averages;
     Prices stdDeviations;
+    Prices historicalPrices;
 
 public:
     friend class Bollingers;
-    AssetPrices(const Prices& _historicalPrices);
+    AssetPrices(const Prices&);
 
-    void ComputeAveragesAndStdDeviations();
+    void ComputeAveragesAndStdDeviations(int period);
 
 };
 
