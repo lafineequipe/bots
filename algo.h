@@ -9,6 +9,7 @@ class Algo
 {
 public:
     virtual bool shouldBuy(const Prices &prices) = 0;
+    virtual bool shouldSell(const Prices &prices) = 0;
 
     double mma(const Prices &prices, int duration);
     double mme(const Prices &prices, int duration);

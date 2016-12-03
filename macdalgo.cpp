@@ -28,3 +28,17 @@ bool MacdAlgo::shouldBuy(const Prices &prices)
 
     return true;
 }
+
+bool MacdAlgo::shouldSell(const Prices &prices)
+{
+    Prices d = prices;
+
+    for (int i = 0; i < _minimumDuration; ++i)
+    {
+        if (macd(d, _shortDuration, _longDuration) > mme(prices, _signalMmeDuration))
+            return false;
+        d.removeLast();
+    }
+
+    return true;
+}

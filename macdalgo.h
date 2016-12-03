@@ -13,6 +13,7 @@ public:
     virtual ~MacdAlgo();
 
     virtual bool shouldBuy(const Prices &prices);
+    virtual bool shouldSell(const Prices &prices);
 
 private:
     int _shortDuration;

@@ -13,10 +13,12 @@ SOURCES += main.cpp \
     macdalgo.cpp \
     algo.cpp \
     Bot.cpp \
-    Simplebot.cpp
+    Simplebot.cpp \
+    runner.cpp
 
 HEADERS += \
     algo.h \
     macdalgo.h \
     Bot.h \
-    Simplebot.h
+    Simplebot.h \
+    runner.h

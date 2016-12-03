@@ -1,15 +1,20 @@
 #ifndef SIMPLEBOT_H
 #define SIMPLEBOT_H
 
-#include <vector>
 #include "Bot.h"
-
-using namespace std;
+#include "macdalgo.h"
 
 class SimpleBot : public Bot
 {
 public:
-    SimpleBot(vector<method> methods);
+    SimpleBot(const Prices& history);
+
+    virtual Method getBest();
+    virtual bool shouldBuy(const Prices& history, Method method);
+    virtual bool shouldSell(const Prices& history, Method method);
+
+private:
+    MacdAlgo _macd;
 };
 
 #endif // SIMPLEBOT_H
