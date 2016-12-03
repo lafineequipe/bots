@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include "algo.h"
 
 class Feeder : public QObject
 {
@@ -25,6 +26,7 @@ private:
     int Limit;
 
 signals:
+    void finished(const Prices &prices);
 
 public slots:
     void onFinished(QNetworkReply* reply);

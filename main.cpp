@@ -1,12 +1,12 @@
 #include <QCoreApplication>
-
-#include "feeder.h"
+#include "runner.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    Feeder *feeder = new Feeder("AAPL");
+    Runner runner;
+    Q_UNUSED(runner);
 
     return a.exec();
 }

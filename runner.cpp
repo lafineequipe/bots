@@ -5,12 +5,19 @@
 static const int Iterations = 50;
 
 Runner::Runner(QObject *parent)
-    : QObject(parent)
+    : QObject(parent), _feeder("AAPL", 400)
 {
+    connect(&_feeder, SIGNAL(finished(const Prices &)), this, SLOT(start(const Prices &)));
 }
 
 void Runner::start(const Prices &history)
 {
+    if (history.size() < 2 * Iterations)
+    {
+        qDebug() << "Cannot process so few input";
+        return;
+    }
+
     Prices oldTrades = history.mid(0, history.size() - Iterations);
     SimpleBot bot(oldTrades);
 

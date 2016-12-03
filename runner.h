@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "Bot.h"
+#include "feeder.h"
 
 class Runner : public QObject
 {
@@ -13,6 +14,9 @@ public:
 
 public slots:
     void start(const Prices &history);
+
+private:
+    Feeder _feeder;
 };
 
 #endif // RUNNER_H

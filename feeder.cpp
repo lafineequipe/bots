@@ -21,22 +21,17 @@ Feeder::Feeder(QString name, int limit, QObject *parent) : QObject(parent)
 void Feeder::onFinished(QNetworkReply* reply){
     QString text = reply->readAll();
     QStringList lines = text.split('\n');
+    QVector<double> results;
 
     lines.removeFirst(); // rm header
 
     for(int index = 0; index < lines.size(); ++index) {
         if (index >= this->getLimit())
-            return;
+            break;
 
-        auto columns = lines[index].split(',');
-        auto date = columns[0];
-        auto close = columns[4];
-
-        qDebug() << date + " " + close;
+        QStringList columns = lines[index].split(',');
+        results.append(columns.at(4).toDouble());
     }
 
-    /*if(reply->error() == QNetworkReply::NoError)
-        qDebug() << QObject::tr(reply->readAll());
-    else
-        qDebug() << reply->errorString();*/
+    emit finished(results);
 }
