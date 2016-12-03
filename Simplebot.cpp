@@ -1,8 +1,8 @@
 #include <QDebug>
 #include "simplebot.h"
 
-SimpleBot::SimpleBot(Method method, const Prices &history, bool random)
-    : Bot(method, history), _macd(random), _bollingers(1.0002, 20)
+SimpleBot::SimpleBot(WisdomBot *wisdom, Method method, const Prices &history, bool random)
+    : Bot(wisdom, method, history), _macd(random), _bollingers(1.0002, 20)
 {
 }
 

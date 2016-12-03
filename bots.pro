@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     bollingers.cpp \
     assetprices.cpp \
     runner.cpp \
-    feeder.cpp
+    feeder.cpp \
+    wisdombot.cpp
 
 HEADERS += \
     algo.h \
@@ -27,4 +28,5 @@ HEADERS += \
     bollingers.h \
     assetprices.h \
     runner.h \
-    feeder.h
+    feeder.h \
+    wisdombot.h

@@ -10,6 +10,7 @@ enum Method
 {
     MACD,
     Bollinger,
+    Wisdom,
     MaxMethods
 };
 
@@ -21,10 +22,12 @@ struct Result
     int mistakes;
 };
 
+class WisdomBot;
+
 class Bot
 {
 public:
-    Bot(Method method, const Prices& history);
+    Bot(WisdomBot *wisdom, Method method, const Prices& history);
     virtual ~Bot();
 
     QJsonObject toJson() const;
@@ -33,6 +36,7 @@ public:
     virtual Action getNextAction(const Prices& history, Method method) = 0;
 
 protected:
+    WisdomBot *_wisdom;
     QJsonArray _feed;
     Method _method;
     Prices _history;

@@ -1,8 +1,9 @@
 #include <QDebug>
 #include "Bot.h"
+#include "wisdombot.h"
 
-Bot::Bot(Method method, const Prices &history)
-    : _method(method), _history(history)
+Bot::Bot(WisdomBot *wisdom, Method method, const Prices &history)
+    : _wisdom(wisdom), _method(method), _history(history)
 {
     _score.type = method;
     _score.mistakes = 0;
@@ -23,8 +24,10 @@ QJsonObject Bot::toJson() const
 
     if (_method == MACD)
         obj.insert("name", QString("Bot MACD %1").arg(++macdCount));
-    else
+    else if (_method == Bollinger)
         obj.insert("name", QString("Bot Bollinger %1").arg(++bollingerCount));
+    else
+        obj.insert("name", QString("Bot Wisdom"));
 
     obj.insert("feed", _feed);
     return obj;
@@ -49,6 +52,9 @@ void Bot::processPrice(double todayPrice)
         else
             _score.mistakes += 1;
     }
+
+    if (_wisdom)
+        _wisdom->registerAction(result);
 
     _feed.append(_score.purchases + _score.sells - _score.mistakes);
     _history.append(todayPrice);

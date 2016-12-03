@@ -4,6 +4,7 @@
 #include <QFile>
 #include "runner.h"
 #include "Simplebot.h"
+#include "wisdombot.h"
 
 static const int Iterations = 200;
 
@@ -22,16 +23,19 @@ void Runner::start(const Prices &history)
     }
 
     Prices oldTrades = history.mid(0, history.size() - Iterations);
-    QVector<SimpleBot *> bots;
+    QVector<Bot *> bots;
 
-    bots.push_back(new SimpleBot(Bollinger, oldTrades));
-    bots.push_back(new SimpleBot(MACD, oldTrades));
+    WisdomBot *wisdom = new WisdomBot(oldTrades);
+
+    bots.push_back(wisdom);
+    bots.push_back(new SimpleBot(wisdom, Bollinger, oldTrades));
+    bots.push_back(new SimpleBot(wisdom, MACD, oldTrades));
 
     for (int i = 0; i < 50; ++i)
-        bots.push_back(new SimpleBot(MACD, oldTrades, true));
+        bots.push_back(new SimpleBot(wisdom, MACD, oldTrades, true));
 
     for (int i = history.size() - Iterations; i < history.size(); ++i)
-        for (SimpleBot *bot : bots)
+        for (Bot *bot : bots)
             bot->processPrice(history[i]);
 
     QJsonArray tradesArray;
@@ -46,7 +50,7 @@ void Runner::start(const Prices &history)
     QJsonArray root;
     root.append(trades);
 
-    for (SimpleBot *bot : bots)
+    for (Bot *bot : bots)
         root.append(bot->toJson());
 
     QJsonDocument document(root);

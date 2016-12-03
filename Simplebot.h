@@ -8,7 +8,7 @@
 class SimpleBot : public Bot
 {
 public:
-    SimpleBot(Method method, const Prices& history, bool random = false);
+    SimpleBot(WisdomBot *wisdom, Method method, const Prices& history, bool random = false);
 
     virtual Action getNextAction(const Prices& history, Method method);
 
