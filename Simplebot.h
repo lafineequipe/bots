@@ -9,7 +9,6 @@ using namespace std;
 class SimpleBot : public Bot
 {
 public:
-    SimpleBot();
     SimpleBot(vector<method> methods);
 };
 

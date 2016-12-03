@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include "algo.h"
 
 using namespace std;
 
@@ -11,13 +12,12 @@ enum method{MACD, Bollinger, Trends};
 class Bot
 {
     map<method, int> scores;
+    virtual void computeScores(vector<double>& prices);
 
 public:
     Bot(vector<method> methods);
-
-    virtual void computeScores(vector<double>& prices);
     virtual method getBest();
-    virtual void updateBase(vector<double>& prices);
+    virtual void updateBase(const Prices& prices, double yesterdayPrice, double todayPrice);
 };
 
 #endif // BOT_H
