@@ -6,17 +6,17 @@
     <title>Demo</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
-    <script src="vue-charts.js"></script>
+    <script src="http://vue-charts.hchspersonal.tk/js/vue-charts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.min.js"></script>
 </head>
 
 <body>
     <div id="app">
-        <canvas id="mycanvas" count="2"></canvas>
+        <canvas id="mycanvas" v-bind:count="lines.length"></canvas>
         <div>
             <div v-for="item in lines">
                 <chartjs-line v-bind:datalabel="item.label" v-bind:data="item.tab" target="mycanvas" v-bind:backgroundcolor="item.color"
-                    v-bind:bordercolor="item.color" :scalesdisplay="true"></chartjs-line>
+                    v-bind:bordercolor="item.color" :scalesdisplay="true" v-bind:labels="x"></chartjs-line>
             </div>
         </div>
     </div>
@@ -59,7 +59,7 @@
             let charts = data.map(function(x) {
                 return {
                     label: x.name,
-                    tab: x.feed,
+                    tab: x.feed,//.map(x => x * 10),
                     color: generateRandomColor()
              }});
 
@@ -67,7 +67,8 @@
             const app = new Vue({
                 el: "#app",
                 data: {
-                    lines: charts
+                    lines: charts,
+                    x: Array.apply(null, { length: 100}) //charts[0].tab.length })
                 }
             });
         });
