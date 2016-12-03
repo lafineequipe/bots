@@ -12,7 +12,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     macdalgo.cpp \
-    algo.cpp \
     Bot.cpp \
     Simplebot.cpp \
     bollingers.cpp \

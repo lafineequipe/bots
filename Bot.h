@@ -2,13 +2,14 @@
 #define BOT_H
 
 #include <QMap>
+#include <QJsonObject>
+#include <QJsonArray>
 #include "algo.h"
 
 enum Method
 {
     MACD,
     Bollinger,
-    Trends,
     MaxMethods
 };
 
@@ -23,18 +24,19 @@ struct Result
 class Bot
 {
 public:
-    Bot(const Prices& history);
+    Bot(Method method, const Prices& history);
     virtual ~Bot();
 
+    QJsonObject toJson() const;
     void processPrice(double todayPrice);
-    const QMap<Method, Result> &getScores() const;
 
-    virtual Result getBest() = 0;
     virtual Action getNextAction(const Prices& history, Method method) = 0;
 
 protected:
+    QJsonArray _feed;
+    Method _method;
     Prices _history;
-    QMap<Method, Result> _scores;
+    Result _score;
 };
 
 #endif // BOT_H
