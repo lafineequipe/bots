@@ -68,7 +68,7 @@
                 el: "#app",
                 data: {
                     lines: charts,
-                    x: Array.apply(null, { length: 100}) //charts[0].tab.length })
+                    x: Array.apply(null, { length: 100}).map((_,i)=>i) //charts[0].tab.length })
                 }
             });
         });
