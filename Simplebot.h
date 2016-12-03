@@ -23,10 +23,4 @@ private:
     MacdAlgo _macd;
 };
 
-// http://stackoverflow.com/questions/4214369/how-to-convert-qstring-to-stdstring
-/*std::ostream& operator<<(std::ostream &stream, const SimpleBot &a) {
-  return stream << a.toString().toLocal8Bit().constData();
-}
-*/
-
 #endif // SIMPLEBOT_H

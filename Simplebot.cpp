@@ -3,10 +3,6 @@
 
 SimpleBot::SimpleBot(const Prices &history)
     : Bot(history), _macd()
-    /*int shortDuration,
-                       int longDuration,
-                       int signalMmeDuration,
-                       int minimumDuration*/
 {
 }
 

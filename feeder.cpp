@@ -22,7 +22,7 @@ void Feeder::onFinished(QNetworkReply* reply){
     QStringList lines = text.split('\n');
     QVector<double> results;
 
-    lines.removeFirst(); // rm header
+    lines.removeFirst();
 
     for(int index = 0; index < lines.size(); ++index) {
         if (index >= this->getLimit())
