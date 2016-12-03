@@ -44,9 +44,9 @@
         let green = nextInt(0,256);
         let blue = nextInt(0,256);
 
-        red = (red + 125) / 2;
-        green = (green + 125) / 2;
-        blue = (blue + 125) / 2;
+        red = parseInt((red + 125) / 2);
+        green = parseInt((green + 125) / 2);
+        blue = parseInt((blue + 125) / 2);
 
         return "rgba(" +red +", "+green+", "+blue+",1)";
     }
