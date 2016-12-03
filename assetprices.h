@@ -12,6 +12,7 @@ class AssetPrices
 
 public:
     friend class Bollingers;
+    AssetPrices();
     AssetPrices(const Prices&);
 
     void ComputeAveragesAndStdDeviations(int period);

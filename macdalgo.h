@@ -6,7 +6,8 @@
 class MacdAlgo : public Algo
 {
 public:
-    MacdAlgo(int shortDuration = 12,
+    MacdAlgo(bool random = false,
+             int shortDuration = 12,
              int longDuration = 26,
              int signalMmeDuration = 9,
              int minimumDuration = 14);

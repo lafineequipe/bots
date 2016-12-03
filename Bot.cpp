@@ -47,3 +47,8 @@ void Bot::processPrice(double todayPrice)
 
     _history.append(todayPrice);
 }
+
+const QMap<Method, Result> &Bot::getScores() const
+{
+    return _scores;
+}

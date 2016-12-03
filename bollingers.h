@@ -10,12 +10,13 @@ class Bollingers : Algo
     std::vector<double> upperBand;
     std::vector<double> lowerBand;
     double decisionFactor;
+    int period;
 
 public:
-    Bollingers(const AssetPrices&, double factor);
+    Bollingers(double factor, int period);
     void computeBands(int period);
 
-    virtual Action getNextAction(const Prices &prices, int period);
+    virtual Action getNextAction(const Prices &prices);
 
     void updateAssetPrices(const Prices& prices);
 };

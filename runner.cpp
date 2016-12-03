@@ -410,9 +410,9 @@ Runner::Runner(QObject *parent)
         109.9
     };
 
-    start(p);
+    //start(p);
 
-    //connect(&_feeder, SIGNAL(finished(const Prices &)), this, SLOT(start(const Prices &)));
+    connect(&_feeder, SIGNAL(finished(const Prices &)), this, SLOT(start(const Prices &)));
 }
 
 void Runner::start(const Prices &history)
@@ -428,6 +428,31 @@ void Runner::start(const Prices &history)
 
     for (int i = history.size() - Iterations; i < history.size(); ++i)
         bot.processPrice(history[i]);
+
+    for (auto it : bot.getScores())
+    {
+        Result result = it;
+
+        switch (result.type)
+        {
+            case MACD:
+                qDebug() << "MACD:";
+                break;
+            case Bollinger:
+                qDebug() << "Bollinger:";
+                break;
+            case Trends:
+                qDebug() << "Trends:";
+                break;
+            default:
+                qDebug() << "Bots are shy today";
+                return;
+        }
+
+        qDebug() << "Sells:" << result.sells
+                 << "| Purchases:" << result.purchases
+                 << "| Mistakes:" << result.mistakes;
+    }
 
     Result best = bot.getBest();
     switch (best.type)

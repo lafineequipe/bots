@@ -27,6 +27,7 @@ public:
     virtual ~Bot();
 
     void processPrice(double todayPrice);
+    const QMap<Method, Result> &getScores() const;
 
     virtual Result getBest() = 0;
     virtual Action getNextAction(const Prices& history, Method method) = 0;

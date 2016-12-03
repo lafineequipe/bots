@@ -1,7 +1,17 @@
 #include <QDebug>
 #include "macdalgo.h"
 
-MacdAlgo::MacdAlgo(int shortDuration,
+static const int shortDurationMin = 3;
+static const int shortDurationRange = 25;
+static const int longDurationMin = 5;
+static const int longDurationRange = 60;
+static const int signalMmeDurationMin = 2;
+static const int signalMmeDurationRange = 50;
+static const int minimumDurationMin = 50;
+static const int minimumDurationRange = 50;
+
+MacdAlgo::MacdAlgo(bool random,
+                   int shortDuration,
                    int longDuration,
                    int signalMmeDuration,
                    int minimumDuration)
@@ -10,6 +20,17 @@ MacdAlgo::MacdAlgo(int shortDuration,
       _signalMmeDuration(signalMmeDuration),
       _minimumDuration(minimumDuration)
 {
+    if (random)
+    {
+        _shortDuration = qrand() % shortDurationRange + shortDurationMin;
+        _longDuration = qrand() % longDurationRange + longDurationMin;
+
+        if (_longDuration <= _shortDuration)
+            _longDuration = _shortDuration + _longDuration;
+
+        _signalMmeDuration = qrand() % signalMmeDurationRange + signalMmeDurationMin;
+        _minimumDuration = qrand() % minimumDurationRange + minimumDurationMin;
+    }
 }
 
 MacdAlgo::~MacdAlgo()

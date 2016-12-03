@@ -8,13 +8,14 @@
 class SimpleBot : public Bot
 {
 public:
-    SimpleBot(const Prices& history);
+    SimpleBot(const Prices& history, bool random = false);
 
     virtual Result getBest();
     virtual Action getNextAction(const Prices& history, Method method);
 
 private:
     MacdAlgo _macd;
+    Bollingers _bollingers;
 };
 
 #endif // SIMPLEBOT_H

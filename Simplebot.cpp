@@ -1,8 +1,8 @@
 #include <QDebug>
 #include "simplebot.h"
 
-SimpleBot::SimpleBot(const Prices &history)
-    : Bot(history)
+SimpleBot::SimpleBot(const Prices &history, bool random)
+    : Bot(history), _macd(random), _bollingers(1.0002, 20)
 {
 }
 
@@ -31,9 +31,6 @@ Action SimpleBot::getNextAction(const Prices &history, Method method)
     if (method == MACD)
         return _macd.getNextAction(history);
     else if (method == Bollinger)
-    {
-        Bollingers bollingers(history, 1.2);
-        return bollingers.getNextAction(history);
-    }
+        return _bollingers.getNextAction(history);
     return false;
 }
