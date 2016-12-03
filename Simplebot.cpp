@@ -2,7 +2,7 @@
 #include "simplebot.h"
 
 SimpleBot::SimpleBot(const Prices &history)
-    : Bot(history), _macd(0,0,0,0)
+    : Bot(history), _macd()
     /*int shortDuration,
                        int longDuration,
                        int signalMmeDuration,
