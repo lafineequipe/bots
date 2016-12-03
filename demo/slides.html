@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body onclick="click()" style="background-color: #7DA7D9;">
+    <div id="body">
+        <p style="color: #F1F1F1;text-align:center; top: 200px; position relative;">
+            La Fine Equipe
+        </p>
+        <div>
+            <script>
+    var i = 0;
+    function click() {
+        console.log('oefwf');
+        if (i > 5)
+        return;
+        var element = document.querySelector('#body');
+        element.style.backgroundUrl = 'url(' + i + '.jpg)';
+        element.style.backgroundSize = 'cover';
+        i++;
+    }
+    </script>
+</body>
+
+</html>
