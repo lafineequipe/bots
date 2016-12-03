@@ -11,8 +11,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     macdalgo.cpp \
-    algo.cpp
+    algo.cpp \
+    Bot.cpp \
+    Simplebot.cpp
 
 HEADERS += \
     algo.h \
-    macdalgo.h
+    macdalgo.h \
+    Bot.h \
+    Simplebot.h
