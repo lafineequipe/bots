@@ -9,7 +9,7 @@
 static const int Iterations = 200;
 
 Runner::Runner(QObject *parent)
-    : QObject(parent), _feeder("AAPL", 400)
+    : QObject(parent), _feeder("AAPL", 400) // AAPL
 {
     connect(&_feeder, SIGNAL(finished(const Prices &)), this, SLOT(start(const Prices &)));
 }
@@ -31,7 +31,7 @@ void Runner::start(const Prices &history)
     bots.push_back(new SimpleBot(wisdom, Bollinger, oldTrades));
     bots.push_back(new SimpleBot(wisdom, MACD, oldTrades));
 
-    for (int i = 0; i < 50; ++i)
+    for (int i = 0; i < 1000; ++i)
         bots.push_back(new SimpleBot(wisdom, MACD, oldTrades, true));
 
     for (int i = history.size() - Iterations; i < history.size(); ++i)
@@ -50,8 +50,14 @@ void Runner::start(const Prices &history)
     QJsonArray root;
     root.append(trades);
 
+    int i = 0;
     for (Bot *bot : bots)
+    {
         root.append(bot->toJson());
+        ++i;
+        if (i > 30)
+            break;
+    }
 
     QJsonDocument document(root);
     QFile file(qApp->applicationDirPath() + "/demos/data.json");

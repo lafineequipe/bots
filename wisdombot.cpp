@@ -34,5 +34,6 @@ Action WisdomBot::getNextAction(const Prices &history, Method method)
         return Nothing;
 
     Action action = qBound(-1, (int)qRound(diversityTheorem(_pending)), 1);
+    _pending.clear();
     return action;
 }
