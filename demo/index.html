@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+    <script src="http://vue-charts.hchspersonal.tk/js/vue-charts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <canvas id="mycanvas" count="2"></canvas>
+        <chartjs-line :datalabel="first_label" :data="first_data" target="mycanvas" :backgroundcolor="'rgba(75,192,192,0.1)'" :bordercolor="'#00c853'"></chartjs-line>
+        <chartjs-line :datalabel="second_label" :data="second_data" target="mycanvas"></chartjs-line>
+    </div>
+    <script type="text/javascript">
+    function loadJSON(callback) {
+        var xobj = new XMLHttpRequest();
+        xobj.overrideMimeType("application/json");
+        xobj.open('GET', 'data.json', true);
+        xobj.onreadystatechange = function () {
+            if (xobj.readyState == 4 && xobj.status == "200") {
+                callback(xobj.responseText);
+            }
+        };
+        xobj.send(null);
+    }
+
+    function init() {
+        loadJSON(function (response) {
+            const data = JSON.parse(response);
+
+
+            Vue.use(VueCharts);
+            const app = new Vue({
+                el: '#app',
+                data:{
+                    first_label : data[0].name,
+                    first_data : data[0].data,
+                    second_label : data[1].name,
+                    second_data : data[1].data,
+                }
+            });
+        }
+
+        init();
+    </script>
+</body>
+
+
+</html>
