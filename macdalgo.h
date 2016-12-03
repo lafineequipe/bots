@@ -1,6 +1,7 @@
 #ifndef MACDALGO_H
 #define MACDALGO_H
 
+#include <string>
 #include "algo.h"
 
 class MacdAlgo : public Algo
@@ -14,6 +15,8 @@ public:
 
     virtual bool shouldBuy(const Prices &prices);
     virtual bool shouldSell(const Prices &prices);
+
+    virtual QString toString() const;
 
 private:
     int _shortDuration;

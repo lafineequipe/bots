@@ -18,8 +18,9 @@ void Bot::processPrice(double todayPrice)
     for (int i = MACD; i < MaxMethods; ++i)
     {
         Method method = static_cast<Method>(i);
-        bool buy = shouldBuy(_history, method);
-        bool sell = !buy ? shouldSell(_history, method) : false;
+        setMethod(method);
+        bool buy = shouldBuy(_history);
+        bool sell = !buy ? shouldSell(_history) : false;
 
         if (buy || sell)
         {

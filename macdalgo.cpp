@@ -42,3 +42,12 @@ bool MacdAlgo::shouldSell(const Prices &prices)
 
     return true;
 }
+
+QString MacdAlgo::toString() const
+{
+    return QString("MACD (")
+            + QString::number(_shortDuration) + ", "
+            + QString::number(_longDuration) + ", "
+            + QString::number(_signalMmeDuration) + ", "
+            + QString::number(_minimumDuration) + ")";
+}

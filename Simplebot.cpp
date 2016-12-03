@@ -2,11 +2,15 @@
 #include "simplebot.h"
 
 SimpleBot::SimpleBot(const Prices &history)
-    : Bot(history)
+    : Bot(history), _macd(0,0,0,0)
+    /*int shortDuration,
+                       int longDuration,
+                       int signalMmeDuration,
+                       int minimumDuration*/
 {
 }
 
-Method SimpleBot::getBest()
+void SimpleBot::setBest()
 {
     int betterValue = 0;
     Method better = MaxMethods;
@@ -34,20 +38,26 @@ Method SimpleBot::getBest()
             betterValue = it.value();
         }
     }
-
-    return better;
+    this->setMethod(better);
 }
 
-bool SimpleBot::shouldBuy(const Prices &history, Method method)
+bool SimpleBot::shouldBuy(const Prices &history)
 {
-    if (method == MACD)
+    if (this->getMethod() == MACD)
         return _macd.shouldBuy(history);
     return false;
 }
 
-bool SimpleBot::shouldSell(const Prices &history, Method method)
+bool SimpleBot::shouldSell(const Prices &history)
 {
-    if (method == MACD)
+    if (this->getMethod() == MACD)
         return _macd.shouldSell(history);
     return false;
+}
+
+QString SimpleBot::toString() const
+{
+    if (this->getMethod() == MACD)
+        return _macd.toString();
+    return ""; // throw?
 }

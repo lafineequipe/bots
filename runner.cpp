@@ -24,11 +24,11 @@ void Runner::start(const Prices &history)
     for (int i = history.size() - Iterations; i < history.size(); ++i)
         bot.processPrice(history[i]);
 
-    Method best = bot.getBest();
-    switch (best)
+    bot.setBest();
+    switch (bot.getMethod())
     {
         case MACD:
-            qDebug() << "MACD is the best";
+            qDebug() << bot << " is the best";
             break;
         case Bollinger:
             qDebug() << "Bollinger is the best";

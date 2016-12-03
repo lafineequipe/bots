@@ -9,7 +9,6 @@ Feeder::Feeder(QString name, int limit, QObject *parent) : QObject(parent)
 
     connect(nam, SIGNAL(finished(QNetworkReply*)), this, SLOT(onFinished(QNetworkReply*)));
 
-
     QString url = "http://ichart.finance.yahoo.com/table.csv?s="
             + this->getName() + "&a=12&b=3&c=2015&d=12&e=2&f=2016&g=d&ignore=.csv&f=sopl1";
 
