@@ -1,4 +1,5 @@
 QT += core
+QT += network
 QT -= gui
 
 CONFIG += c++11
@@ -11,8 +12,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     macdalgo.cpp \
-    algo.cpp
+    algo.cpp \
+    feeder.cpp
 
 HEADERS += \
     algo.h \
-    macdalgo.h
+    macdalgo.h \
+    feeder.h
