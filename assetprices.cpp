@@ -17,18 +17,18 @@ AssetPrices::AssetPrices(const vector<double>& _historicalPrices)
     stdDeviations.resize(n);
 }
 
-double AssetPrices::ComputeAveragesAndStdDeviations()
+void AssetPrices::ComputeAveragesAndStdDeviations()
 {
-    int n = historicalValues.size();
+    int n = historicalPrices.size();
     double sum;
     double sq_sum(n);
 
     //compute averages
-    averages[0] = historicalValues[0];
+    averages[0] = historicalPrices[0];
     stdDeviations[0] = 0.0;
     for(int i = 1; i<n; i++)
     {
-        sum = std::accumulate(historicalPrices.begin(), historicalValues.begin()+i, 0.0);
+        sum = std::accumulate(historicalPrices.begin(), historicalPrices.begin()+i, 0.0);
         averages[i] = sum/(i+1);
 
         for(int j=0; j<i; j++)

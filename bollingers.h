@@ -6,8 +6,8 @@
 class Bollingers
 {
     AssetPrices& assetPrices;
-    vector<double> upperBand;
-    vector<double> lowerBand;
+    std::vector<double> upperBand;
+    std::vector<double> lowerBand;
 
 public:
     Bollingers(AssetPrices&);
