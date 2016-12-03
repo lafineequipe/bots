@@ -3,6 +3,7 @@
 
 #include "Bot.h"
 #include "macdalgo.h"
+#include "bollingers.h"
 
 class SimpleBot : public Bot
 {

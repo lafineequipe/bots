@@ -2,17 +2,17 @@
 #define ASSETPRICES_H
 
 #include <vector>
+#include "algo.h"
 
 class AssetPrices
 {
-    std::vector<double> historicalPrices;
-    std::vector<double> averages;
-    std::vector<double> stdDeviations;
+    Prices historicalPrices;
+    Prices averages;
+    Prices stdDeviations;
 
 public:
     friend class Bollingers;
-    AssetPrices();
-    AssetPrices(const std::vector<double>& _historicalPrices);
+    AssetPrices(const Prices& _historicalPrices);
 
     void ComputeAveragesAndStdDeviations();
 

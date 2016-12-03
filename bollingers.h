@@ -5,16 +5,17 @@
 
 class Bollingers
 {
-    AssetPrices& assetPrices;
+    AssetPrices assetPrices;
     std::vector<double> upperBand;
     std::vector<double> lowerBand;
+    double decisionFactor;
 
 public:
-    Bollingers(AssetPrices&);
+    Bollingers(const AssetPrices&, double factor);
     void computeBands();
 
-    bool shouldBuy(double tresholdFactor);
-    bool shouldSell(double tresholdFactor);
+    bool shouldBuy();
+    bool shouldSell();
 };
 
 #endif // BOLLINGERS_H

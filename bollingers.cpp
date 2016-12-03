@@ -1,12 +1,15 @@
+#include <QDebug>
 #include "bollingers.h"
 
-Bollingers::Bollingers(AssetPrices& _assetPrices)
-    : assetPrices(_assetPrices)
+Bollingers::Bollingers(const AssetPrices& _assetPrices, double factor)
+    : assetPrices(_assetPrices),
+      decisionFactor(factor)
 {
     int n;
     n = assetPrices.historicalPrices.size();
     upperBand.resize(n);
     lowerBand.resize(n);
+    computeBands();
 }
 
 void Bollingers::computeBands()
@@ -21,19 +24,34 @@ void Bollingers::computeBands()
     }
 }
 
-
-bool Bollingers::shouldBuy(double factor)
+bool Bollingers::shouldBuy()
 {
+    static int count = 0;
+
     int n = assetPrices.historicalPrices.size();
-    bool crossCondition = assetPrices.averages[n-1]>factor*upperBand[n-1];
+    bool crossCondition = assetPrices.averages[n-1]>decisionFactor*upperBand[n-1];
+
+    if (crossCondition)
+        qDebug() << "Buy";
+
+    ++count;
+
+    if (count == 200)
+    {
+        for (int i = 0; i < n; ++i)
+            qDebug() << lowerBand[i] << assetPrices.averages[i] << upperBand[i];
+    }
 
     return crossCondition;
 }
 
-bool Bollingers::shouldSell(double factor)
+bool Bollingers::shouldSell()
 {
     int n = assetPrices.historicalPrices.size();
-    bool crossCondition = assetPrices.averages[n-1]<factor*upperBand[n-1];
+    bool crossCondition = decisionFactor*assetPrices.averages[n-1]<lowerBand[n-1];
+
+    if (crossCondition)
+        qDebug() << "Sell";
 
     return crossCondition;
 }

@@ -4,17 +4,11 @@
 
 using namespace std;
 
-AssetPrices::AssetPrices()
+AssetPrices::AssetPrices(const Prices& _historicalPrices)
+    : historicalPrices(_historicalPrices),
+      averages(_historicalPrices.size()),
+      stdDeviations(_historicalPrices.size())
 {
-}
-
-AssetPrices::AssetPrices(const vector<double>& _historicalPrices)
-{
-    int n = historicalPrices.size();
-    historicalPrices = _historicalPrices;
-
-    averages.resize(n);
-    stdDeviations.resize(n);
 }
 
 void AssetPrices::ComputeAveragesAndStdDeviations()

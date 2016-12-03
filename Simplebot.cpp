@@ -30,6 +30,11 @@ bool SimpleBot::shouldBuy(const Prices &history, Method method)
 {
     if (method == MACD)
         return _macd.shouldBuy(history);
+    else if (method == Bollinger)
+    {
+        Bollingers bollingers(history, 1.2);
+        return bollingers.shouldBuy();
+    }
     return false;
 }
 
@@ -37,5 +42,10 @@ bool SimpleBot::shouldSell(const Prices &history, Method method)
 {
     if (method == MACD)
         return _macd.shouldSell(history);
+    else if (method == Bollinger)
+    {
+        Bollingers bollingers(history, 1.2);
+        return bollingers.shouldSell();
+    }
     return false;
 }

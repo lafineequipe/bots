@@ -26,11 +26,14 @@ Prices Algo::mme(const Prices &prices, int duration)
         values[i] = 0;
 
     double lastValue = prices[0];
+    values[0] = lastValue;
 
-    for (int i = 0; i < prices.size() - duration; ++i)
+    for (int i = 1; i < prices.size(); ++i)
     {
-        double sum = lastValue + (2.0 / (duration + 1)) * (prices[i] - lastValue);
-        values[i + duration] = sum / static_cast<double>(duration);
+        int currentDuration = i + 1 < duration ? i + 1 : duration;
+        double currentMME = lastValue + (2.0 / (currentDuration + 1)) * (prices[i] - lastValue);
+        values[i] = currentMME;
+        lastValue = currentMME;
     }
 
     return values;
@@ -45,13 +48,11 @@ Prices Algo::macd(const Prices &prices, int shortDuration, int longDuration)
     for (int i = 0; i < prices.size(); ++i)
         values[i] = 0;
 
-    shortValues = mma(prices, shortDuration);
-    longValues = mma(prices, longDuration);
+    shortValues = mme(prices, shortDuration);
+    longValues = mme(prices, longDuration);
 
     for (int i = longDuration; i < prices.size(); ++i)
-    {
         values[i] = shortValues[i] - longValues[i];
-    }
 
     return values;
 }

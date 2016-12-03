@@ -36,9 +36,9 @@ void Bot::processPrice(double todayPrice)
                 else
                     _scores[method].sells += 1;
             }
-            else if (method == MACD)
+            else
             {
-                qDebug() << "Mistake" << _history.last() << buy;
+                //qDebug() << "Mistake" << _history.last() << buy;
                 _scores[method].mistakes += 1;
             }
         }
