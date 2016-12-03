@@ -12,6 +12,14 @@ enum Method
     MaxMethods
 };
 
+struct Result
+{
+    Method type;
+    int sells;
+    int purchases;
+    int mistakes;
+};
+
 class Bot
 {
 public:
@@ -20,13 +28,13 @@ public:
 
     void processPrice(double todayPrice);
 
-    virtual Method getBest() = 0;
+    virtual Result getBest() = 0;
     virtual bool shouldBuy(const Prices& history, Method method) = 0;
     virtual bool shouldSell(const Prices& history, Method method) = 0;
 
 protected:
     Prices _history;
-    QMap<Method, int> _scores;
+    QMap<Method, Result> _scores;
 };
 
 #endif // BOT_H

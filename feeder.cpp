@@ -30,7 +30,7 @@ void Feeder::onFinished(QNetworkReply* reply){
             break;
 
         QStringList columns = lines[index].split(',');
-        results.append(columns.at(4).toDouble());
+        results.prepend(columns.at(4).toDouble());
     }
 
     emit finished(results);

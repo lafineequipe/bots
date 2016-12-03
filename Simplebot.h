@@ -9,7 +9,7 @@ class SimpleBot : public Bot
 public:
     SimpleBot(const Prices& history);
 
-    virtual Method getBest();
+    virtual Result getBest();
     virtual bool shouldBuy(const Prices& history, Method method);
     virtual bool shouldSell(const Prices& history, Method method);
 

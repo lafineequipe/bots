@@ -1,37 +1,83 @@
+#include <numeric>
+#include <QDebug>
 #include "algo.h"
 
-double Algo::mma(const Prices &prices, int duration)
+Prices Algo::mma(const Prices &prices, int duration)
 {
-    int last = prices.size() - 1;
-    double value = 0;
+    Prices values(prices.size());
 
-    if (duration > 0)
+    for (int i = 0; i < prices.size(); ++i)
+        values[i] = 0;
+
+    for (int i = 0; i < prices.size() - duration; ++i)
     {
-        duration = qMin<int>(prices.size(), duration);
-        for (int i = 0; i < duration; ++i)
-            value += prices[last - i];
-        value = value / duration;
+        double sum = std::accumulate(prices.begin() + i, prices.begin() + i + duration, 0.0);
+        values[i + duration] = sum / static_cast<double>(duration);
     }
 
-    return value;
+    return values;
 }
 
-double Algo::mme(const Prices &prices, int duration)
+Prices Algo::mme(const Prices &prices, int duration)
 {
-    int first = prices.size() - duration - 1;
-    double value = prices[first];
-    double lastValue = value;
+    Prices values(prices.size());
 
-    for (int i = 1; i < duration; ++i)
+    for (int i = 0; i < prices.size(); ++i)
+        values[i] = 0;
+
+    double lastValue = prices[0];
+
+    for (int i = 0; i < prices.size() - duration; ++i)
     {
-        value = lastValue + (2 / (duration + 1)) * (prices[first + i] - lastValue);
-        lastValue = value;
+        double sum = lastValue + (2.0 / (duration + 1)) * (prices[i] - lastValue);
+        values[i + duration] = sum / static_cast<double>(duration);
     }
 
-    return value;
+    return values;
 }
 
-double Algo::macd(const Prices &prices, int shortDuration, int longDuration)
+Prices Algo::macd(const Prices &prices, int shortDuration, int longDuration)
 {
-    return mme(prices, shortDuration) - mme(prices, longDuration);
+    Prices longValues;
+    Prices shortValues;
+    Prices values(prices.size());
+
+    for (int i = 0; i < prices.size(); ++i)
+        values[i] = 0;
+
+    shortValues = mma(prices, shortDuration);
+    longValues = mma(prices, longDuration);
+
+    for (int i = longDuration; i < prices.size(); ++i)
+    {
+        values[i] = shortValues[i] - longValues[i];
+    }
+
+    return values;
 }
+
+/*
+
+=> Using MMA and not MME
+
+Prices Algo::macd(const Prices &prices, int shortDuration, int longDuration)
+{
+    Prices longValues;
+    Prices shortValues;
+    Prices values(prices.size());
+
+    for (int i = 0; i < prices.size(); ++i)
+        values[i] = 0;
+
+    shortValues = mma(prices, shortDuration);
+    longValues = mma(prices, longDuration);
+
+    for (int i = longDuration; i < prices.size(); ++i)
+    {
+        values[i] = shortValues[i] - longValues[i];
+    }
+
+    return values;
+}
+
+*/

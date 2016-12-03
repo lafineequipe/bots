@@ -6,32 +6,20 @@ SimpleBot::SimpleBot(const Prices &history)
 {
 }
 
-Method SimpleBot::getBest()
+Result SimpleBot::getBest()
 {
-    int betterValue = 0;
-    Method better = MaxMethods;
+    Result better;
+    better.type = MaxMethods;
+    better.sells = 0;
+    better.purchases = 0;
+    better.mistakes = 0;
 
     for (auto it = _scores.constBegin(); it != _scores.constEnd(); ++it)
     {
-        switch (it.key())
+        if (better.type == MaxMethods
+            || it.value().purchases + it.value().sells > better.sells + better.purchases)
         {
-            case MACD:
-                qDebug() << "MACD:" << it.value() << "correct values";
-                break;
-            case Bollinger:
-                qDebug() << "Bollinger:" << it.value() << "correct values";
-                break;
-            case Trends:
-                qDebug() << "Trends:" << it.value() << "correct values";
-                break;
-            default:
-                break;
-        }
-
-        if (better == MaxMethods || it.value() > betterValue)
-        {
-            better = it.key();
-            betterValue = it.value();
+            better = it.value();
         }
     }
 
