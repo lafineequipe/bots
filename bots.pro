@@ -1,4 +1,5 @@
 QT += core
+QT += network
 QT -= gui
 
 CONFIG += c++11
@@ -14,11 +15,13 @@ SOURCES += main.cpp \
     algo.cpp \
     Bot.cpp \
     Simplebot.cpp \
-    runner.cpp
+    runner.cpp \
+    feeder.cpp
 
 HEADERS += \
     algo.h \
     macdalgo.h \
     Bot.h \
     Simplebot.h \
-    runner.h
+    runner.h \
+    feeder.h
