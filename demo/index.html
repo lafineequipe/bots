@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -12,8 +13,12 @@
 <body>
     <div id="app">
         <canvas id="mycanvas" count="2"></canvas>
-        <chartjs-line :datalabel="first_label" :data="first_data" target="mycanvas" :backgroundcolor="'rgba(75,192,192,0.1)'" :bordercolor="'#00c853'"></chartjs-line>
-        <chartjs-line :datalabel="second_label" :data="second_data" target="mycanvas"></chartjs-line>
+        <div>
+            <div v-for="item in lines">
+                <chartjs-line v-bind:datalabel="item.label" v-bind:data="item.tab" target="mycanvas" v-bind:backgroundcolor="item.color"
+                    v-bind:bordercolor="item.color"></chartjs-line>
+            </div>
+        </div>
     </div>
     <script type="text/javascript">
     function loadJSON(callback) {
@@ -28,26 +33,47 @@
         xobj.send(null);
     }
 
-    function init() {
-        loadJSON(function (response) {
-            const data = JSON.parse(response);
+    function nextInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
 
+    function generateRandomColor() {
+        let red = nextInt(0,256);
+        let green = nextInt(0,256);
+        let blue = nextInt(0,256);
+
+        red = (red + 125) / 2;
+        green = (green + 125) / 2;
+        blue = (blue + 125) / 2;
+
+        return "rgba(" +red +", "+green+", "+blue+"1)";
+    }
+
+    function init()
+    {
+        loadJSON(function (response) 
+        {
+            const data = JSON.parse(response);
+            let charts = data.map(function(x) {
+                return {
+                    label: x.name,
+                    tab: x.feed,
+                    color: generateRandomColor()
+             }});
 
             Vue.use(VueCharts);
             const app = new Vue({
-                el: '#app',
+                el: "#app",
                 data: {
-                    first_label : data[0].name,
-                    first_data : data[0].data,
-                    second_label : data[1].name,
-                    second_data : data[1].data
+                    lines: charts
                 }
             });
-        }
+        });
     }
-        init();
+    init();
     </script>
 </body>
-
 
 </html>
