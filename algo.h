@@ -5,15 +5,16 @@
 
 typedef QVector<double> Prices;
 
+typedef int Action;
+
+static const int Sell = -1;
+static const int Nothing = 0;
+static const int Buy = 1;
+
 class Algo
 {
 public:
-    virtual bool shouldBuy(const Prices &prices) = 0;
-    virtual bool shouldSell(const Prices &prices) = 0;
-
-    Prices mma(const Prices &prices, int duration);
-    Prices mme(const Prices &prices, int duration);
-    Prices macd(const Prices &prices, int shortDuration, int longDuration);
+    virtual Action getNextAction(const Prices &prices) = 0;
 };
 
 #endif // ALGO_H

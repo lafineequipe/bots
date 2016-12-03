@@ -2,8 +2,9 @@
 #define BOLLINGERS_H
 
 #include "assetprices.h"
+#include "algo.h"
 
-class Bollingers
+class Bollingers : Algo
 {
     AssetPrices assetPrices;
     std::vector<double> upperBand;
@@ -14,8 +15,7 @@ public:
     Bollingers(const AssetPrices&, double factor);
     void computeBands();
 
-    bool shouldBuy();
-    bool shouldSell();
+    virtual Action getNextAction(const Prices &prices);
 };
 
 #endif // BOLLINGERS_H

@@ -11,8 +11,7 @@ public:
     SimpleBot(const Prices& history);
 
     virtual Result getBest();
-    virtual bool shouldBuy(const Prices& history, Method method);
-    virtual bool shouldSell(const Prices& history, Method method);
+    virtual Action getNextAction(const Prices& history, Method method);
 
 private:
     MacdAlgo _macd;

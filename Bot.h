@@ -29,8 +29,7 @@ public:
     void processPrice(double todayPrice);
 
     virtual Result getBest() = 0;
-    virtual bool shouldBuy(const Prices& history, Method method) = 0;
-    virtual bool shouldSell(const Prices& history, Method method) = 0;
+    virtual Action getNextAction(const Prices& history, Method method) = 0;
 
 protected:
     Prices _history;

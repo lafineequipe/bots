@@ -24,34 +24,15 @@ void Bollingers::computeBands()
     }
 }
 
-bool Bollingers::shouldBuy()
-{
-    static int count = 0;
-
-    int n = assetPrices.historicalPrices.size();
-    bool crossCondition = assetPrices.averages[n-1]>decisionFactor*upperBand[n-1];
-
-    if (crossCondition)
-        qDebug() << "Buy";
-
-    ++count;
-
-    if (count == 200)
-    {
-        for (int i = 0; i < n; ++i)
-            qDebug() << lowerBand[i] << assetPrices.averages[i] << upperBand[i];
-    }
-
-    return crossCondition;
-}
-
-bool Bollingers::shouldSell()
+Action Bollingers::getNextAction(const Prices &prices)
 {
     int n = assetPrices.historicalPrices.size();
-    bool crossCondition = decisionFactor*assetPrices.averages[n-1]<lowerBand[n-1];
 
-    if (crossCondition)
-        qDebug() << "Sell";
+    if (assetPrices.averages[n-1]>decisionFactor*upperBand[n-1])
+        return Buy;
 
-    return crossCondition;
+    if (decisionFactor*assetPrices.averages[n-1]<lowerBand[n-1])
+        return Sell;
+
+    return Nothing;
 }

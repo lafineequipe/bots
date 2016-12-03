@@ -12,8 +12,12 @@ public:
              int minimumDuration = 14);
     virtual ~MacdAlgo();
 
-    virtual bool shouldBuy(const Prices &prices);
-    virtual bool shouldSell(const Prices &prices);
+    virtual Action getNextAction(const Prices &prices);
+
+private:
+    Prices mma(const Prices &prices, int duration);
+    Prices mme(const Prices &prices, int duration);
+    Prices macd(const Prices &prices, int shortDuration, int longDuration);
 
 private:
     int _shortDuration;

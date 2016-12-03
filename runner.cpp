@@ -427,10 +427,7 @@ void Runner::start(const Prices &history)
     SimpleBot bot(oldTrades);
 
     for (int i = history.size() - Iterations; i < history.size(); ++i)
-    {
-        qDebug() << "Loop" << (i - (history.size() - Iterations));
         bot.processPrice(history[i]);
-    }
 
     Result best = bot.getBest();
     switch (best.type)
